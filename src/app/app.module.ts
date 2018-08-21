@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { AddCoursesComponent  } from './add-courses/add-courses.component';
 import { CourseswithjsonComponent } from './courseswithjson/courseswithjson.component';
 
-import {CoursesComponent} from './courses/courses.component';
+
 
 @NgModule({
   declarations: [
@@ -15,7 +15,6 @@ import {CoursesComponent} from './courses/courses.component';
     AddCoursesComponent,
     CourseswithjsonComponent,
    
-    CoursesComponent
     
   ],
   imports: [

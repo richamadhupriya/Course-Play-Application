@@ -3,7 +3,7 @@ var fs = require("fs");
 var app=express();
 var parser=require('body-parser');
 var cors=require('cors');
-var contents = fs.readFileSync("../../assets/courses.json");
+var contents = fs.readFileSync("../assets/courses.json");
 var jsonContent = JSON.parse(contents);
 
 console.log('Running server');
@@ -18,7 +18,7 @@ app.route('/rest/api/post',cors()).post((req,res)=>{
       "coursePrice":newcourse.price
     }
     jsonContent.push(data);
-      fs.writeFileSync('../../assets/courses.json', JSON.stringify(jsonContent));  
+      fs.writeFileSync('../assets/courses.json', JSON.stringify(jsonContent));  
 });
 
 app.route('/rest/api/update').post((req,res)=>{
@@ -34,7 +34,7 @@ app.route('/rest/api/update').post((req,res)=>{
   {
     jsonContent[j]=data;
   }
-    fs.writeFileSync('../../assets/courses.json', JSON.stringify(jsonContent));  
+    fs.writeFileSync('../assets/courses.json', JSON.stringify(jsonContent));  
   
 });
 
@@ -42,7 +42,7 @@ app.route('/rest/api/delete').post((req,res)=>{
   console.log("Delete Invoked");
   var deletefile=req.body;
   jsonContent.splice(deletefile.index,1);
-  fs.writeFileSync('../../assets/courses.json', JSON.stringify(jsonContent));
+  fs.writeFileSync('../assets/courses.json', JSON.stringify(jsonContent));
 });
 
 app.listen(8000);

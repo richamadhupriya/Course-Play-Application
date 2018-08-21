@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule} from '@angular/forms';
-import {CoursesComponent} from '../courses/courses.component';
 import {AddService} from '../add.service';
 
 @Component({

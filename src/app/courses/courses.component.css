@@ -1,0 +1,22 @@
+.modal {
+    position: absolute;
+    top: 200px;
+    right: 60px;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    overflow-y: auto;
+ }
+
+ .modal-footer{
+    font-size: 100em;
+    width:100%;
+ }
+ input.ng-invalid.ng-touched  
+{  
+   border-color: red;  
+} 
+input.ng-valid.ng-touched  
+{  
+   border-color: green;  
+} 

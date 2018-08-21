@@ -1,0 +1,155 @@
+<div class="tab-pane fade in active">
+  <div class="panel-group" id="app">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <b>Courses
+          <a data-toggle="collapse" href="#c1">
+            <span class="glyphicon glyphicon-plus"></span>
+          </a>
+        </b>
+      </div>
+      <div class="panel-collapse collapse" id="c1">
+        <div class="panel-body">
+          <ul class="courses">
+            <li *ngFor="let course of courses">
+              {{course.courseName}}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="panel panel-primary" id="app">
+    <div class="panel-heading">
+      <b>Add Course</b>
+    </div>
+    <div class="form-group panel-body">
+      <form [formGroup]="AddCoursesForm" (submit)="add($event)">
+        <table class="table">
+
+          <tr>
+            <td>
+              <label for="courseName">Course Name</label>
+            </td>
+            <td>
+              <input type="text" name="courseName" id="courseName" placeholder="Enter Course name" formControlName="courseName" [(ngModel)]='displayName'
+                required />
+            </td>
+            <td>
+              <div *ngIf="AddCoursesForm.controls['courseName'].touched && !AddCoursesForm.controls['courseName'].valid">
+                <div *ngIf="AddCoursesForm.controls['courseName'].hasError('required')">
+                  Course Name is Required!!
+                </div>
+                <div *ngIf="AddCoursesForm.controls['courseName'].hasError('pattern')">
+                  Course name should be only alphanumeric
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="courseDuration">Course Duration</label>
+            </td>
+            <td>
+              <input type="text" name="courseDuration" id="courseDuration" placeholder="Enter Course Duration in months, eg.12" formControlName="courseDuration"
+                [(ngModel)]='displayDuration' required />
+            </td>
+            <td>
+              <div *ngIf="AddCoursesForm.controls['courseDuration'].touched && !AddCoursesForm.controls['courseDuration'].valid">
+                <div *ngIf="AddCoursesForm.controls['courseDuration'].hasError('required')">
+                  Course Duration is Required!!
+                </div>
+                <div *ngIf="AddCoursesForm.controls['courseDuration'].hasError('pattern')">
+                  Course courseDuration should be numeric digits only
+                </div>
+
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <input type="submit" value="ADD COURSE" class="btn btn-primary" [disabled]='!AddCoursesForm.valid' />
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>
+
+  <div class="panel panel-primary" id="app">
+    <div class="panel-heading">
+      <b>Find Duration</b>
+    </div>
+    <div class="form-group panel-body">
+      <form [formGroup]="SearchCoursesForm" (submit)="fetchDuration($event)">
+        <table class="table">
+
+          <tr>
+            <td>
+              <label for="serachName">Enter Course Name</label>
+            </td>
+            <td>
+              <input type="text" name="serachName" placeholder="Enter Course name" id="serachName" formControlName="serachName" required
+              />
+            </td>
+
+            <td>
+              <input type="submit" value="GET DURATION" class="btn btn-primary" data-toggle="modal" data-traget="courseDuration" [disabled]='!SearchCoursesForm.valid'
+              />
+            </td>
+
+          </tr>
+          <tr>
+            <td colspan="2">
+              <div *ngIf="SearchCoursesForm.controls['serachName'].touched && !SearchCoursesForm.controls['serachName'].valid">
+                <div *ngIf="SearchCoursesForm.controls['serachName'].hasError('required')">
+                  Course Name is Required!!
+                </div>
+                <div *ngIf="SearchCoursesForm.controls['serachName'].hasError('pattern')">
+                  Course name should be only alphanumeric
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>
+  <div *ngIf="searched">
+    <ng-template [ngIf]="searchResult" [ngIfElse]="err">
+      <div  class="panel panel-primary" id="app">
+        <div class="panel-heading">
+          <b>Duration of course</b>
+        </div>
+        
+        <div class="panel-body">
+    
+          <strong>Duration of {{searchResult.courseName}} = {{searchResult.courseDuration}} months</strong>
+    
+        </div>
+    
+      </div>
+    </ng-template>
+    <ng-template #err>
+      <div  class="panel panel-primary" id="app">
+        <div class="panel-heading">
+          <b>Duration of course</b>
+        </div>
+        
+        <div class="panel-body">
+    
+          <strong>Course not found</strong>
+    
+        </div>
+    
+      </div>
+    </ng-template>
+  </div>
+  
+  
+
+
+</div>

@@ -1,0 +1,67 @@
+<div class="container">
+  <!-- Button to Open the Modal -->
+  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Add Course
+  </button>
+
+  <!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+          <form #courseForm="ngForm" (ngSubmit)="invokepost(courseForm)">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h1 class="modal-title"><b>Add Course</b></h1>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <table>
+          <tr>
+          <th> Course ID:</th>
+          <td><input type="number" name="cId" id="cId" [(ngModel)]="courseId" #courseid='ngModel' required></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td style="color:red" >
+            <span *ngIf="courseid.invalid&&courseid.touched">Course Id is required</span>
+            </td>
+          </tr>
+          <tr>
+          <th>Course Name:</th>
+          <td><input type="text" [(ngModel)]="courseName" name="cname" id="cname" #coursename='ngModel' required></td></tr>
+
+          <tr>
+            <td>
+            </td>
+            <td style="color:red">
+            <span *ngIf="coursename.invalid&&coursename.touched">Course Name is required</span>
+            </td>
+          </tr>
+          <tr>
+          <th>Course Price:</th>
+          <td><input type="number" [(ngModel)]="coursePrice" name="cprice" id="cprice" #courseprice='ngModel' required></td>
+          </tr>
+          <tr>
+            <td>
+            </td>
+            <td style="color:red">
+            <span *ngIf="courseprice.invalid&&courseprice.touched">Course Price is required</span>
+            </td>
+          </tr>
+  
+          </table>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success btn-lg" [disabled]='!courseForm.valid'>Add</button>
+          <button type="button" class="btn btn-danger btn-lg" data-dismiss="modal">Close</button>
+        </div>
+          </form>
+      </div>
+
+    </div>
+  </div>
+
+</div>

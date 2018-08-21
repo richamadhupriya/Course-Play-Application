@@ -1,0 +1,198 @@
+
+<div style="text-align:center" class="panel panel-primary" id="app">
+    <div class="panel-heading">Courses with JSON</div>
+    
+    <div class="panel-body">
+    <form>
+        <table align="center" class="table">
+        <tr>
+        <td>
+        Sort based on:
+      </td>
+      <td>
+          <div class="form-group">
+        <select  [(ngModel)]="sel" name="sort">
+          <option value="Id">Course Id</option>
+          <option value="Name">Course Name</option>
+          <option value="Price">Course Price</option>
+        </select>
+        </div>
+      </td>
+      
+      <td>
+        <button type="button" class="btn btn-primary btn-lg" (click)="apply()">Apply</button>
+      </td>
+      <td><button class="btn btn-primary btn-lg"  data-toggle="modal" data-target="#myModal">Add Courses</button></td>
+      </tr>
+      <tr>
+              <th>Course Id</th>
+              <th>Course Name</th>
+              <th>Course Price</th>
+              <th colspan="2" style="text-align:center">Action</th>
+            </tr>
+      <tr *ngFor='let course of courseArray;let i=index' class="data">
+              <td style="text-align:justify">{{course.courseId}}</td>
+              <td style="text-align:justify">{{course.courseName|lowercase}}</td>
+              <td style="text-align:justify">{{course.coursePrice|currency:'INR':false:'1.2-2'}}</td>
+              <td style="text-align:center"><button class="btn btn-warning btn-lg" (click)="update(course,i);" data-toggle="modal" data-target="#updateModal">Update</button></td>
+              <td style="text-align:center"><button class="btn btn-danger btn-lg" (click)="delete(course,i);" data-toggle="modal" data-target="#deleteModal">Delete</button></td>
+          </tr>
+      
+    </table>
+    </form>
+    </div>
+    </div>
+    
+    <!-- The Modal -->
+    <div class="modal" id="updateModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+              <form #courseForm1="ngForm" (ngSubmit)="updatedetails(courseForm1)">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h1 class="modal-title"><b>Update Course</b></h1>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+    
+            <!-- Modal body -->
+            <div class="modal-body">
+              <table>
+              <tr>
+              <th> Course ID:
+              <td><input type="number" name="Id" id="Id1" [(ngModel)]="updateId" #updateid="ngModel" required></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td style="color:red" >
+                    <span *ngIf="updateid.invalid&&updateid.touched">Course Id is required</span>
+                </td>
+              </tr>
+              <tr>
+                  <th> Course Name:
+                  <td><input type="text" name="Name" id="Name1" [(ngModel)]="updateName" #updatename="ngModel" required></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td style="color:red" >
+                        <span *ngIf="updatename.invalid&&updatename.touched">Course Name is required</span>
+                    </td>
+              </tr>
+              <tr>
+                  <th> Course Price:
+                  <td><input type="number" name="Price" id="Price1" [(ngModel)]="updatePrice" #updateprice="ngModel" required></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td style="color:red" >
+                        <span *ngIf="updateprice.invalid&&updateprice.touched">Course Price is required</span>
+                    </td>
+                  </tr>
+              </table>
+            </div>
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success btn-lg" [disabled]='!courseForm1.valid'>Update</button>
+              <button type="button" class="btn btn-danger btn-lg" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+    
+          </div>
+        </div>
+      </div>
+    
+    
+      <div class="modal" id="deleteModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+      
+              <!-- Modal Header -->
+              <div class="modal-header">
+                <h1 class="modal-title"><b>Delete Course</b></h1>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+      
+              <!-- Modal body -->
+               <div class="modal-body">
+                <table>
+                <tr>
+                <th> Course ID:
+                <td><input type="text" [(ngModel)]="updateId" disabled></td>
+                <tr>
+                <th>Course Name:
+                <td><input type="text" [(ngModel)]="updateName" disabled></td>
+                <tr>
+                <th>Course Price:
+                <td><input type="text" [(ngModel)]="updatePrice" disabled>
+                </table>
+              </div>
+      
+              <!-- Modal footer -->
+              <div class="modal-footer">
+               <button type="button" class="btn btn-success btn-lg mr-auto" (click)="confdelete();">Yes</button>
+                <button type="button" id="no" class="btn btn-danger btn-lg float-right" data-dismiss="modal">No</button>
+             </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+              <form #courseForm="ngForm" (ngSubmit)="invokepost(courseForm)">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h1 class="modal-title"><b>Add Course</b></h1>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+    
+            <!-- Modal body -->
+            <div class="modal-body">
+              <table>
+              <tr>
+              <th> Course ID:</th>
+              <td><input type="number" name="cId" id="cId" [(ngModel)]="courseId" #courseid='ngModel' required></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td style="color:red" >
+                <span *ngIf="courseid.invalid&&courseid.touched">Course Id is required</span>
+                </td>
+              </tr>
+              <tr>
+              <th>Course Name:</th>
+              <td><input type="text" [(ngModel)]="courseName" name="cname" id="cname" #coursename='ngModel' required></td></tr>
+    
+              <tr>
+                <td>
+                </td>
+                <td style="color:red">
+                <span *ngIf="coursename.invalid&&coursename.touched">Course Name is required</span>
+                </td>
+              </tr>
+              <tr>
+              <th>Course Price:</th>
+              <td><input type="number" [(ngModel)]="coursePrice" name="cprice" id="cprice" #courseprice='ngModel' required></td>
+              </tr>
+              <tr>
+                <td>
+                </td>
+                <td style="color:red">
+                <span *ngIf="courseprice.invalid&&courseprice.touched">Course Price is required</span>
+                </td>
+              </tr>
+      
+              </table>
+            </div>
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success btn-lg" [disabled]='!courseForm.valid'>Add</button>
+              <button type="button" class="btn btn-danger btn-lg" data-dismiss="modal">Close</button>
+            </div>
+              </form>
+          </div>
+    
+        </div>
+      </div>
+    
+      
